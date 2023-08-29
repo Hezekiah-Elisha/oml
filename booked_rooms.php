@@ -2,7 +2,9 @@
     session_start();
     require_once('User.php');
     include_once("Reservation.php");
+    require_once('Room.php');
 
+    
     // User::sessionInfo();
 
     //check is session is valid
@@ -74,58 +76,38 @@
           include_once "includes/sidenav.php";
         ?>
         <div class="col-md-10">
-          <h2>Welcome <span class="name"><?php echo User::getNamebyId($_SESSION['id']) ?></span>!</h2>
-          <div class="row">
-            <h3>Your Profile</h3>
+            <h2>Booked Rooms</h2>
             <hr>
-            <div class="col-md-6">
-              <img src="./image/profile_image.png" class="img-fluid profile-image" alt="">
-              <?php
-              $info = User::getUser($_SESSION['id']);
-              ?>
-              <h4>Name: <?php             
-              // print_r($info);
-              echo $info["username"]; ?></h4>
-              <p>Email: <?php echo $info["email"] ?></p>
-              <a href="">
-                <button class="btn btn-mine">Complete Profile</button>
-              </a>
-              
-            </div>
-            <div class="col-md-6">
-              <h3>Reservation</h3>
-              <hr>
-              <div>
-              <?php 
-            if (!Reservation::checkUserReservation($_SESSION['id'])){    
-            ?>
-                <p>You haven't Booked a room yet?</p>
-                <a href="book_a_room.php">
-                  <button class="btn btn-mine">Book Here</button>
-                s</a>
-              <?php  
-             }else{
-              ?>
-                <p>You have booked a room</p>
-                <a href="view_reservation.php">
-                  <button class="btn btn-mine">View Reservation</button>
-                </a>
-                <?php
-                  $reservation_info = Reservation::getReservationByUserId($_SESSION['id']);
 
-                
-                ?>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Price</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <?php
+                        $rooms = Reservation::getReservationByUserId($_SESSION['id']);
+                        // foreach($rooms as $room){
+                          echo $rooms['room_id'];
+                        //   // echo "<td>$room['room_id']</td>";
+                        // }
 
-                <p class="text-success">Start day:<?php echo $reservation_info['start_date']; ?> </p>
-                <p class="text-danger">End day:<?php echo $reservation_info['end_date']; ?> </p>
-              <?php
-             }
-              ?>
-
-              </div>
-              
-            </div>
-          </div>
+                        // print_r($rooms);
+                        $Room = new Room();
+                          $one_room = $Room->getRoomById($rooms['room_id']);
+                          echo "<td>".$one_room['room_name']."</td>";
+                          echo "<td>".$one_room['price']."</td>";
+                          echo "
+                            <button class='btn btn-mine'>Check in</button>
+                          "
+                      ?>
+                    </tr>
+                </tbody>
+            </table>
 
 
         </div>

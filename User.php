@@ -1,6 +1,8 @@
 <?php
 
 require_once("./config.php");
+require_once("./PHPMailer/src/PHPMailer.php");
+
 
 class User {
     private $userId;
