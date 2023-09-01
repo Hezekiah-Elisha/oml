@@ -32,7 +32,7 @@
             <button type="submit" class="btn">Log In</button>
             
             <div class="register-link">
-                <p>Don't have an account? <a href="register.html">Register</a></p>
+                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
             </div>
 <!--icon links <i class="bi bi-envelope-fill"></i>
 
